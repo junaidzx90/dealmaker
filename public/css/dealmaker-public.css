@@ -1,0 +1,320 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+ @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap');
+ @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+ body {
+    background: #fff !important;
+}
+.elementor-column-gap-default > .elementor-column > .elementor-element-populated {
+    padding: 0px !important;
+    background-color: #fff !important;
+}
+#deal_maker{
+	max-width: 1200px;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.deal_maker_content_wrapper{
+	width: 100%;
+    margin: 30px 50px 70px 0;
+}
+
+.deal_maker_logo{
+	width: 100%;
+	margin: 15px 0;
+}
+.deal_maker_logo img{
+	width: 200px;
+    height: auto;
+}
+
+#deal_maker > section.deal_maker_content_wrapper > h1{
+	font-size: 40px;
+    font-weight: 700;
+    line-height: 1.22;
+    color: #871e8c;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.deal_maker_headingTwo{
+	font-family: rakuten-sans,sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 40px;
+}
+
+.deal_maker_description{
+	font-size: 18px;
+    color: #333;
+    line-height: 1.5;
+}
+
+#form_data{
+	width: 100%;
+    max-width: 500px;
+    margin: 30px 0 0;
+}
+
+#form_data label {
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 15px 0 0;
+    color: #333;
+}
+
+#form_data label sub {
+    font-size: 24px;
+    color: red;
+}
+
+#dm-logo::-webkit-file-upload-button {
+    background: #871e8c;
+    padding: 10px 20px;
+    border: navajowhite;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+#form_data input[type="file"]{
+    border-bottom: 1px solid transparent;
+}
+#form_data input[type="text"]{
+    all: unset;
+    width: calc(100% - 30px);
+    height: 38px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    line-height: 38px;
+    background-color: #efefef;
+    margin: 0;
+    padding: 0 15px;
+    font-size: 16px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+#form_data input[type="text"]:focus{
+    outline: 2px solid #000;
+}
+.deal_maker_richtext p {
+    font-size: 12px;
+    padding-top: 23px;
+    line-height: 20px;
+    margin: 0;
+}
+.deal_maker_richtext p a{
+    text-decoration: underline;
+}
+.deal_maker_richtext a{
+	text-decoration: none;
+	color: #000;
+}
+
+.deal_maker_generate_btn{
+	font-family: rakuten-sans,Roboto,sans-serif;
+    font-size: 16px;
+    line-height: 1.33;
+    font-weight: 700;
+    background: 0 0;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: none;
+    display: inline-block;
+    border-radius: 100px;
+    padding: 12px 20px 9px;
+    transition: all .15s ease-in-out;
+    text-align: center;
+    letter-spacing: .11px;
+    color: #fff;
+    background-color: #767676;
+    border: 2px solid #767676;
+    margin: 40px 5px 0;
+}
+
+.deal_maker_badge_wrapper{
+	width: 100%;
+    position: relative;
+    margin: 0 auto 50px;
+    overflow: hidden;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: -136px;
+}
+
+.deal_maker_badge_preview {
+    height: 670px;
+    width: 305px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    display: flex;
+    align-items: end;
+    position: relative;
+}
+/* #user-logo {
+    width: 73px;
+    background-color: transparent;
+    height: 73px;
+    border-radius: 50%;
+    top: 267px;
+    left: calc(100% - 190px);
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+img.template__logo {
+    width: 65px;
+    position: absolute;
+    top: 298px;
+    left: calc(100% - 187px);
+}
+.badge_contents {
+    padding: 0;
+    /* height: 216px; */
+    height: 264px;
+    width: 100%;
+    text-align: center;
+}
+.user-log-box {
+    height: 50px;
+    overflow: hidden;
+    width: 132px;
+    margin: 0 auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.badge_contents img {
+    width: 100px;
+}
+.badge_contents > .info {
+    padding-top: 15px;
+}
+.badge_contents > .info > div {
+    overflow: hidden;
+}
+.badge_contents > .info span {
+    display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 27px;
+}
+.badge_contents > .info span.company{
+    padding-top: 20px;
+}
+.generated_button{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    margin-top: 20px;
+}
+.generated_button.none{
+    display: none !important;
+}
+.generated_button h5{
+	font-size: 13px;
+    font-weight: 700;
+    margin: 30px 0 10px;
+}
+div#informations p.alert {
+    color: #000;
+    font-weight: 700;
+    font-size: 18px;
+}
+.generated_button .deal_maker_generate_btn{
+	margin: 0 ;
+	background-color: #871e8c;
+    border: 2px solid #871e8c;
+}
+
+.generated_button .deal_maker_generate_btn:hover{
+	background-color: #fff;
+	color: #871e8c;
+}
+
+.social-media {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.social-media a {
+    margin: 0 15px;
+    color: #4e4544;
+    text-decoration: none;
+    opacity: .8;
+}
+
+.social-media a:hover{
+	opacity: 1;
+}
+
+.dm-badge__loading {
+    width: 200px;
+    min-height: 200px;
+    position: relative;
+    display: none;
+}
+@keyframes dmloader{
+    0%{
+        top:96px;
+        left:96px;
+        width:0;
+        height:0;
+        opacity:1
+    }to{
+        top:18px;
+        left:18px;
+        width:156px;
+        height:156px;
+        opacity:0
+    }
+}
+.dm-badge__loading div:first-child {
+    border-color: #8529cd;
+}
+.dm-badge__loading div:nth-child(2) {
+    border-color: #8529cd;
+    -webkit-animation-delay: -.75s;
+    animation-delay: -.75s;
+}
+.dm-badge__loading div {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    position: absolute;
+    border-width: 4px;
+    border-style: solid;
+    opacity: 1;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-animation: dmloader 1.5s cubic-bezier(0,.2,.8,1) infinite;
+    animation: dmloader 1.5s cubic-bezier(0,.2,.8,1) infinite;
+}
+
+@media (min-width: 800px){
+	#deal_maker{
+		flex-direction: row;
+	}
+    .generated_button{
+        margin: 32px 0 0 0px;
+    }
+    .deal_maker_badge_align {
+        width: fit-content;
+        margin-left: auto;
+    }
+}
