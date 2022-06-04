@@ -65,12 +65,10 @@
     <section class="deal_maker_badge_wrapper">
         <div class="deal_maker_badge_align">
             <div style="background-image: url(<?php echo plugin_dir_url(__FILE__)."template.png" ?>)" class="deal_maker_badge_preview" id="dealmaker_badge">
-                <!-- <div id="user-logo"></div> -->
                 <img src="<?php echo get_option('dealmaker_logo_url') ?>" class="template__logo">
 
                 <div class="badge_contents">
-                    <div style="background-image: url(<?php echo plugin_dir_url(__FILE__)."template.png" ?>)"  class="user-log-box" id="user-logo">
-                        <!-- <img id="user-logo" src="<?php //echo get_option('dealmaker_logo_url') ?>" alt="logo"> -->
+                    <div style="background-image: url(<?php echo get_option('dealmaker_logo_url') ?>)"  class="user-log-box" id="user-logo">
                     </div>
                     <div id="dlinfo" class="info">
                         <div class="fname-info-text"><span>First name</span></div>
