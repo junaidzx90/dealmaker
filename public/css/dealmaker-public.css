@@ -203,6 +203,8 @@ img.template__logo {
 }
 .badge_contents > .info {
     padding-top: 15px;
+    padding-left: 26px;
+    padding-right: 26px;
 }
 .badge_contents > .info > div {
     overflow: hidden;
