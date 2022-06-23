@@ -163,18 +163,6 @@
     align-items: end;
     position: relative;
 }
-/* #user-logo {
-    width: 73px;
-    background-color: transparent;
-    height: 73px;
-    border-radius: 50%;
-    top: 267px;
-    left: calc(100% - 190px);
-    position: absolute;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-} */
 
 img.template__logo {
     width: 65px;
@@ -192,11 +180,11 @@ img.template__logo {
 .user-log-box {
     height: 50px;
     overflow: hidden;
-    width: 132px;
+    width: 155px;
     margin: 0 auto;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .badge_contents img {
     width: 100px;

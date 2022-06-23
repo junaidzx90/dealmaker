@@ -2,14 +2,8 @@ jQuery(function ($) {
   'use strict';
   let preview = function (input) {
     if (input.files && input.files[0]) {
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        $('#user-logo').css(
-          'background-image',
-          'url(' + e.target.result + ')'
-        );
-      };
-      reader.readAsDataURL(input.files[0]);
+      let img = '<img src="'+window.URL.createObjectURL(input.files[0])+'">';
+      $('#user-logo').html(img);
     }
   };
 
@@ -84,6 +78,8 @@ jQuery(function ($) {
     $(".dm-badge__loading").show();
     setTimeout(() => {
       html2canvas(document.getElementById("dealmaker_badge"), {
+        scale: 3,
+        dpi: 144 * 2,
         allowTaint: true,
         useCORS: true
       }).then(function (canvas) {

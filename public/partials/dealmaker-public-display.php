@@ -68,7 +68,8 @@
                 <img src="<?php echo get_option('dealmaker_logo_url') ?>" class="template__logo">
 
                 <div class="badge_contents">
-                    <div style="background-image: url(<?php echo get_option('dealmaker_logo_url') ?>)"  class="user-log-box" id="user-logo">
+                    <div class="user-log-box" id="user-logo">
+                        <img src="<?php echo get_option('dealmaker_logo_url') ?>" alt="">
                     </div>
                     <div id="dlinfo" class="info">
                         <div class="fname-info-text"><span>First name</span></div>
