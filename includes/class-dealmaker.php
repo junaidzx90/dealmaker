@@ -98,7 +98,10 @@ class Dealmaker {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
+		if( ! class_exists( 'WP_List_Table' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+		}
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makers.php';
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.

@@ -1,5 +1,5 @@
 <?php
-
+global $wpdb;
 /**
  * Provide a public-facing view for the plugin
  *
@@ -11,29 +11,35 @@
  * @package    Dealmaker
  * @subpackage Dealmaker/public/partials
  */
+
+$title = '';
+$subtitle = '';
+$description = '';
+$logourl = '';
+$badgeurl = '';
+$disclaimer = '';
+
+$result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}dealmaker WHERE ID = $makerId");
+if($result){
+    $title = $result->title;
+    $subtitle = $result->subtitle;
+    $description = $result->description;
+    $logourl = $result->logo_url;
+    $badgeurl = $result->badge_url;
+    $disclaimer = $result->disclaimer;
+}
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div id="deal_maker">
     <!-- Wrapping contents -->
     <section class="deal_maker_content_wrapper">
-        <!-- Adding logo section -->
-        <?php
-        if(get_option('dealmaker_logo_url')){
-            ?>
-            <div class="deal_maker_logo">
-                <img src="<?php echo get_option('dealmaker_logo_url') ?>">
-            </div>
-            <?php
-        }
-        ?>
-
         <!-- Add headings -->
-        <h1 class="deal_maker_headingOne">Show the World <br> You're a DealMaker</h1>
-        <h4 class="deal_maker_headingTwo">Download and share your custom DealMaker badge.</h4>
+        <h1 class="deal_maker_headingOne"><?php echo __($title, 'dealmaker') ?></h1>
+        <h4 class="deal_maker_headingTwo"><?php echo __($subtitle, 'dealmaker') ?></h4>
 
         <!-- Adding description -->
-        <p class="deal_maker_description">You’re now registered to attend DealMaker so let the world know it! Create a custom badge by filling in the fields below and then click “Generate Badge.” Share the image on your social media to help you get a jump start on your networking for the event and start making some deals. We can’t wait to see you soon!</p>
+        <div class="deal_maker_description"><?php echo __(wpautop( $description ), 'dealmaker') ?></div>
 
         <!-- Adding information form -->
         <div id="informations">
@@ -52,8 +58,7 @@
 
             <!-- Adding richtexts -->
             <div class="deal_maker_richtext">
-                <p>We store your email address (or personal data above) in our database so we can send you communications from us and our service providers related to the commercial relationship and transaction, industry news and information and/or programs of interest, or marketing and sales material. Please refer to our privacy policy for more information: <a href="<?php echo get_option('dealmaker_privacy_page_url') ?>"><?php echo get_option('dealmaker_privacy_page_url') ?></a>.</p>
-                <p>You may unsubscribe or change your email address for email communications at any time by following the instructions mentioned prominently within each email communications or by emailing <a href="mailto:<?php echo get_option('dealmaker_support_mail') ?>"><?php echo get_option('dealmaker_support_mail') ?></a>.</p>
+                <?php echo __(wpautop( $disclaimer ), 'dealmaker') ?>
             </div>
 
             <!-- Adding generate badge button -->
@@ -64,16 +69,18 @@
     <!-- Wrapping badge section -->
     <section class="deal_maker_badge_wrapper">
         <div class="deal_maker_badge_align">
-            <div style="background-image: url(<?php echo plugin_dir_url(__FILE__)."template.png" ?>)" class="deal_maker_badge_preview" id="dealmaker_badge">
-                <img src="<?php echo get_option('dealmaker_logo_url') ?>" class="template__logo">
+            <div style="background-image: url(<?php echo $badgeurl ?>)" class="deal_maker_badge_preview" id="dealmaker_badge">
+                <img src="" class="template__logo">
 
                 <div class="badge_contents">
                     <div class="user-log-box" id="user-logo">
-                        <img src="<?php echo get_option('dealmaker_logo_url') ?>" alt="">
+                        <img class="dealmaker_logo_url" src="<?php echo $logourl ?>">
                     </div>
                     <div id="dlinfo" class="info">
-                        <div class="fname-info-text"><span>First name</span></div>
-                        <div class="lname-info-text"><span>Last name</span></div>
+                        <div class="fullname-info-text">
+                            <span class="fname-info-text">Mr</span>
+                            <span class="lname-info-text">Jhon</span>
+                        </div>
                         <div class="jobtitle-info-text"><span>Job title</span></div>
                         <div class="company-info-text"><span class="company">Company</span></div>
                     </div>

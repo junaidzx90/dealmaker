@@ -74,7 +74,11 @@ class Dealmaker_Admin {
 	}
 
 	function dm_menupage(){
-		add_options_page( "Dealmaker", "Dealmaker", "manage_options", "dealmaker", [$this, "dealmaker_setting_page"], null );
+		add_menu_page( "dealmaker", "dealmaker", "manage_options", "dealmaker", [$this, "dealmaker_makers"], "dashicons-nametag", 45 );
+		add_submenu_page( "dealmaker", "Makers", "Makers", "manage_options", "dealmaker", [$this, "dealmaker_makers"]);
+		add_submenu_page( "dealmaker", "Add new", "Add new", "manage_options", "new-maker", [$this, "dealmaker_newmaker"]);
+		add_submenu_page( "dealmaker", "Settings", "Settings", "manage_options", "dealmaker-setting", [$this, "dealmaker_setting_page"]);
+
 		add_settings_section( 'general_dm_opt_section', '', '', 'general_opt_dm_page' );
 		
 		add_settings_field( 'dealmaker_shortcode', 'Shortcode', [$this, 'dealmaker_shortcode_cb'], 'general_opt_dm_page','general_dm_opt_section' );
@@ -102,6 +106,28 @@ class Dealmaker_Admin {
 		echo '<input type="email" placeholder="Email address" name="dealmaker_support_mail" class="widefat" value="'.get_option('dealmaker_support_mail').'">';
 	}
 
+
+	function dealmaker_makers(){
+		if((isset($_GET['page']) && $_GET['page'] === 'dealmaker') && (isset($_GET['action']) && $_GET['action'] === 'manage') && isset($_GET['maker']) && !empty($_GET['maker'])){
+			$manage_maker = intval($_GET['maker']);
+			require_once plugin_dir_path( __FILE__ )."partials/manage-maker.php";
+		}else{
+			$makers = new Dealmaker_Makers();
+			?>
+			<h3>Makers</h3>
+			<hr>
+			<form action="" method="post">
+				<?php
+				$makers->prepare_items();
+				$makers->display();
+				?>
+			</form>
+			<?php
+		}
+	}
+	function dealmaker_newmaker(){
+		require_once plugin_dir_path( __FILE__ )."partials/manage-maker.php";
+	}
 
 	function dealmaker_setting_page(){
 		echo '<h3>Settings</h3><hr>';

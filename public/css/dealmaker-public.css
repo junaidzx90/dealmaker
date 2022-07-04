@@ -26,15 +26,6 @@
     margin: 30px 50px 70px 0;
 }
 
-.deal_maker_logo{
-	width: 100%;
-	margin: 15px 0;
-}
-.deal_maker_logo img{
-	width: 200px;
-    height: auto;
-}
-
 #deal_maker > section.deal_maker_content_wrapper > h1{
 	font-size: 40px;
     font-weight: 700;
@@ -52,7 +43,7 @@
     margin-bottom: 40px;
 }
 
-.deal_maker_description{
+.deal_maker_description, .deal_maker_description p{
 	font-size: 18px;
     color: #333;
     line-height: 1.5;
@@ -202,6 +193,9 @@ img.template__logo {
     font-size: 24px;
     font-weight: bold;
     line-height: 27px;
+}
+span.lname-info-text {
+    margin-left: 5px;
 }
 .badge_contents > .info span.company{
     padding-top: 20px;

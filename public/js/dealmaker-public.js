@@ -1,5 +1,6 @@
 jQuery(function ($) {
   'use strict';
+  var defaultLogo = $(".dealmaker_logo_url").attr("src");
   let preview = function (input) {
     if (input.files && input.files[0]) {
       let img = '<img src="'+window.URL.createObjectURL(input.files[0])+'">';
@@ -17,14 +18,14 @@ jQuery(function ($) {
       let expects = ['jpg', 'jpeg', 'png', 'PNG', 'JPG', 'gif'];
 
       if (expects.indexOf(exten) == -1) {
-        $('#user-logo').css('background-image', 'url()');
+        $('#user-logo').children("img").attr("src", defaultLogo)
         $('#dm-logo').val('');
         alert('Invalid Image!');
         return false;
       }
       preview(this);
     } else {
-      $('#user-logo').css('background-image', 'url()');
+      $('#user-logo').children("img").attr("src", defaultLogo)
     }
   });
 
@@ -50,15 +51,15 @@ jQuery(function ($) {
   $("#dm-first-name").on("input", function(){
     $(this).css("border-color", "transparent");
     fname = $(this).val();
-    $(".fname-info-text").children("span").text($(this).val());
-    adjustFontSizes( $(document).find(".fname-info-text").children("span") , $(this).val());
+    $(".fullname-info-text").children("span.fname-info-text").text(fname);
+    adjustFontSizes( $(document).find("span.fname-info-text") , fname);
   });
 
   $("#dm-last-name").on("input", function(){
     $(this).css("border-color", "transparent");
     lname = $(this).val();
-    $(".lname-info-text").children("span").text($(this).val());
-    adjustFontSizes( $(document).find(".lname-info-text").children("span") , $(this).val());
+    $(".fullname-info-text").children("span.lname-info-text").text(lname);
+    adjustFontSizes( $(document).find("span.lname-info-text") , lname);
   });
 
   $("#dm-jobtitle").on("input", function(){
@@ -97,10 +98,6 @@ jQuery(function ($) {
 
   $("#deal_maker_generate_btn").on('click', function () {
     let error = false;
-    if($("#dm-logo").val() === ""){
-      $("#dm-logo").css("border-bottom", "1px solid red");
-      error = true;
-    }
     if($("#dm-first-name").val() === ""){
       $("#dm-first-name").css("border-color", "red");
       error = true;
@@ -122,7 +119,6 @@ jQuery(function ($) {
       $("#informations").html("<p class='alert'>Your DealMaker badge has been created!</p>");
       $(".generated_button").removeClass("none");
     }
-    
   });
 
 });

@@ -68,9 +68,20 @@ class Dealmaker_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dealmaker-public.js', array( 'jquery', 'html2canvas' ), $this->version, true );
 	}
 
-	function dealmaker_shortcode_view(){
+	function dealmaker_shortcode_view($atts){
 		ob_start();
-		require_once plugin_dir_path( __FILE__ )."partials/dealmaker-public-display.php";
+		$atts = shortcode_atts(
+			array(
+				'id' => null,
+			), $atts, 'dealmaker' 
+		);
+
+		$makerId = null;
+		if($atts['id'] !== null){
+			$makerId = intval($atts['id']);
+			require_once plugin_dir_path( __FILE__ )."partials/dealmaker-public-display.php";
+		}
+		
 		return ob_get_clean();
 	}
 
