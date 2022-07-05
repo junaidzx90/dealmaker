@@ -160,11 +160,11 @@ class Dealmaker_Makers extends WP_List_Table
             if(is_array($_REQUEST['maker'])){
                 $ids = $_REQUEST['maker'];
                 foreach($ids as $ID){
-                    
+                    $wpdb->query("DELETE FROM {$wpdb->prefix}dealmaker WHERE ID = $ID");
                 }
             }else{
                 $ID = intval($_REQUEST['maker']);
-                
+                $wpdb->query("DELETE FROM {$wpdb->prefix}dealmaker WHERE ID = $ID");
             }
         }
     }

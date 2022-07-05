@@ -77,35 +77,7 @@ class Dealmaker_Admin {
 		add_menu_page( "dealmaker", "dealmaker", "manage_options", "dealmaker", [$this, "dealmaker_makers"], "dashicons-nametag", 45 );
 		add_submenu_page( "dealmaker", "Makers", "Makers", "manage_options", "dealmaker", [$this, "dealmaker_makers"]);
 		add_submenu_page( "dealmaker", "Add new", "Add new", "manage_options", "new-maker", [$this, "dealmaker_newmaker"]);
-		add_submenu_page( "dealmaker", "Settings", "Settings", "manage_options", "dealmaker-setting", [$this, "dealmaker_setting_page"]);
-
-		add_settings_section( 'general_dm_opt_section', '', '', 'general_opt_dm_page' );
-		
-		add_settings_field( 'dealmaker_shortcode', 'Shortcode', [$this, 'dealmaker_shortcode_cb'], 'general_opt_dm_page','general_dm_opt_section' );
-		// Logo URL
-		add_settings_field( 'dealmaker_logo_url', 'Logo URL', [$this, 'dealmaker_logo_url_cb'], 'general_opt_dm_page','general_dm_opt_section' );
-		register_setting( 'general_dm_opt_section', 'dealmaker_logo_url' );
-		// Privacy page URL
-		add_settings_field( 'dealmaker_privacy_page_url', 'Privacy page URL', [$this, 'dealmaker_privacy_page_url_cb'], 'general_opt_dm_page','general_dm_opt_section' );
-		register_setting( 'general_dm_opt_section', 'dealmaker_privacy_page_url' );
-		// Support email
-		add_settings_field( 'dealmaker_support_mail', 'Support email', [$this, 'dealmaker_support_mail_cb'], 'general_opt_dm_page','general_dm_opt_section' );
-		register_setting( 'general_dm_opt_section', 'dealmaker_support_mail' );
 	}
-
-	function dealmaker_shortcode_cb(){
-		echo '<input type="text" readonly value="[dealmaker]">';
-	}
-	function dealmaker_privacy_page_url_cb(){
-		echo '<input type="url" placeholder="URL" name="dealmaker_privacy_page_url" class="widefat" value="'.get_option('dealmaker_privacy_page_url').'">';
-	}
-	function dealmaker_logo_url_cb(){
-		echo '<input type="url" placeholder="URL" name="dealmaker_logo_url" class="widefat" value="'.get_option('dealmaker_logo_url').'">';
-	}
-	function dealmaker_support_mail_cb(){
-		echo '<input type="email" placeholder="Email address" name="dealmaker_support_mail" class="widefat" value="'.get_option('dealmaker_support_mail').'">';
-	}
-
 
 	function dealmaker_makers(){
 		if((isset($_GET['page']) && $_GET['page'] === 'dealmaker') && (isset($_GET['action']) && $_GET['action'] === 'manage') && isset($_GET['maker']) && !empty($_GET['maker'])){
@@ -127,14 +99,5 @@ class Dealmaker_Admin {
 	}
 	function dealmaker_newmaker(){
 		require_once plugin_dir_path( __FILE__ )."partials/manage-maker.php";
-	}
-
-	function dealmaker_setting_page(){
-		echo '<h3>Settings</h3><hr>';
-		echo '<form style="width: 75%" action="options.php" method="post">';
-		settings_fields( 'general_dm_opt_section' );
-		do_settings_sections( 'general_opt_dm_page' );
-		submit_button(  );
-		echo '</form>';
 	}
 }

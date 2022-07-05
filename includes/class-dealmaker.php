@@ -70,7 +70,7 @@ class Dealmaker {
 		if ( defined( 'DEALMAKER_VERSION' ) ) {
 			$this->version = DEALMAKER_VERSION;
 		} else {
-			$this->version = '1.0.6';
+			$this->version = '1.0.7';
 		}
 		$this->plugin_name = 'dealmaker';
 
