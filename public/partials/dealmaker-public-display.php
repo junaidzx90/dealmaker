@@ -44,7 +44,7 @@ if($result){
         <!-- Adding information form -->
         <div id="informations">
             <div id="form_data">
-                <label for="dm-logo">Upload a logo <sub>*</sub></label>
+                <label for="dm-logo">Upload a logo</label>
                 <input type="file" id="dm-logo">
                 <label for="dm-first-name">First name <sub>*</sub></label>
                 <input type="text" id="dm-first-name">
@@ -69,7 +69,14 @@ if($result){
     <!-- Wrapping badge section -->
     <section class="deal_maker_badge_wrapper">
         <div class="deal_maker_badge_align">
-            <div style="background-image: url(<?php echo $badgeurl ?>)" class="deal_maker_badge_preview" id="dealmaker_badge">
+            <?php
+            $image = file_get_contents($badgeurl);
+            if ($image !== false){
+                $image = 'data:image/jpg;base64,'.base64_encode($image);
+            
+            }
+            ?>
+            <div style="background-image: url(<?php echo $image ?>)" class="deal_maker_badge_preview" id="dealmaker_badge">
                 <img src="" class="template__logo">
 
                 <div class="badge_contents">
