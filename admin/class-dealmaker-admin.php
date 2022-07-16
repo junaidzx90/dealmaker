@@ -73,6 +73,23 @@ class Dealmaker_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dealmaker-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
+	function create_dealmaker_table(){
+		global $wpdb;
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+		$dealmaker = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}dealmaker` (
+			`ID` INT NOT NULL AUTO_INCREMENT,
+			`title` VARCHAR(255) NOT NULL,
+			`subtitle`  VARCHAR(255) NOT NULL,
+			`logo_url`  VARCHAR(555) NOT NULL,
+			`badge_url`  VARCHAR(555) NOT NULL,
+			`description` TEXT NOT NULL,
+			`disclaimer` TEXT NOT NULL,
+			`date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`ID`)) ENGINE = InnoDB";
+		dbDelta($dealmaker);
+	}
+
 	function dm_menupage(){
 		add_menu_page( "dealmaker", "dealmaker", "manage_options", "dealmaker", [$this, "dealmaker_makers"], "dashicons-nametag", 45 );
 		add_submenu_page( "dealmaker", "Makers", "Makers", "manage_options", "dealmaker", [$this, "dealmaker_makers"]);

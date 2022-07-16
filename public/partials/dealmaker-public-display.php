@@ -69,14 +69,7 @@ if($result){
     <!-- Wrapping badge section -->
     <section class="deal_maker_badge_wrapper">
         <div class="deal_maker_badge_align">
-            <?php
-            $image = file_get_contents($badgeurl);
-            if ($image !== false){
-                $image = 'data:image/jpg;base64,'.base64_encode($image);
-            
-            }
-            ?>
-            <div style="background-image: url(<?php echo $image ?>)" class="deal_maker_badge_preview" id="dealmaker_badge">
+            <div style="background-image: url(<?php echo $badgeurl ?>)" class="deal_maker_badge_preview" id="dealmaker_badge">
                 <img src="" class="template__logo">
 
                 <div class="badge_contents">

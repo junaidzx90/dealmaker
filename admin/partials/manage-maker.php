@@ -2,20 +2,48 @@
 <hr>
 
 <?php
+function upload_dealmaker_images($file, $filename){
+    global $dealerror;
+    $dealerror = '';
+
+    $wpdir = wp_upload_dir(  );
+    $max_upload_size = wp_max_upload_size();
+    $fileSize = $file['size'];
+    $imageFileType = strtolower(pathinfo($file['name'],PATHINFO_EXTENSION));
+
+    $uploadPath = DEALMAKER_PATH."upload/$filename.$imageFileType";
+    $uploadUrl = DEALMAKER_URL."upload/$filename.$imageFileType";
+
+    // Allow certain file formats
+    $allowedExt = array("jpg", "jpeg", "png", "PNG", "JPG", "gif");
+
+    if(!in_array($imageFileType, $allowedExt)) {
+        $dealerror = "Unsupported file format!";
+    }
+
+    if ($fileSize > $max_upload_size) {
+        $dealerror = "Maximum upload size $max_upload_size";
+    }
+
+    if(empty($dealerror)){
+        if(move_uploaded_file($file["tmp_name"], $uploadPath)){
+            return $uploadUrl;
+        }
+    }
+}
+
 global $wpdb;
 if(isset($_POST['save_dealmaker'])){
     $title = ((isset($_POST['maker_title'])) ? sanitize_text_field( $_POST['maker_title'] ): '');
     $subtitle = ((isset($_POST['maker_subtitle'])) ? sanitize_text_field ($_POST['maker_subtitle'] ): '');
     $description = ((isset($_POST['description'])) ? stripslashes($_POST['description']): '');
-    $logourl = ((isset($_POST['logourl'])) ? esc_url_raw( $_POST['logourl'] ): '');
-    $badgeurl = ((isset($_POST['badgeurl'])) ? esc_url_raw ($_POST['badgeurl'] ): '');
+    $logoImage = ((isset($_FILES['logoImage'])) ? $_FILES['logoImage']: '');
+    $badgeImage = ((isset($_FILES['badgeImage'])) ? $_FILES['badgeImage']: '');
     $disclaimer = ((isset($_POST['disclaimer'])) ? stripslashes($_POST['disclaimer']): '');
-    
+
     $wpdb->insert($wpdb->prefix.'dealmaker', array(
         'title' => $title,
         'subtitle' => $subtitle,
-        'logo_url' => $logourl,
-        'badge_url' => $badgeurl,
         'description' => $description,
         'disclaimer' => $disclaimer,
         'date' => date("Y-m-d h:i:s a")
@@ -23,7 +51,20 @@ if(isset($_POST['save_dealmaker'])){
 
     if($wpdb->insert_id){
         $lastid = $wpdb->insert_id;
-        ob_start();
+        $logoUrl = '';
+        $badgeUrl = '';
+        if(!empty($logoImage['tmp_name'])){
+            $logoUrl = upload_dealmaker_images($logoImage, "logo-$lastid");
+        }
+        if(!empty($badgeImage['tmp_name'])){
+            $badgeUrl = upload_dealmaker_images($badgeImage, "badge-$lastid"); 
+        }
+
+        $wpdb->update($wpdb->prefix.'dealmaker', array(
+            'logo_url' => $logoUrl,
+            'badge_url' => $badgeUrl,
+        ), array("ID" => $lastid), array("%s","%s"), array("%d"));
+
         wp_safe_redirect( admin_url( "admin.php?page=dealmaker&action=manage&maker=$lastid") );
         exit;
     }
@@ -33,25 +74,37 @@ if(isset($_POST['update_dealmaker'])){
     $title = ((isset($_POST['maker_title'])) ? sanitize_text_field( $_POST['maker_title'] ): '');
     $subtitle = ((isset($_POST['maker_subtitle'])) ? sanitize_text_field ($_POST['maker_subtitle'] ): '');
     $description = ((isset($_POST['description'])) ? stripslashes($_POST['description']): '');
-    $logourl = ((isset($_POST['logourl'])) ? esc_url_raw( $_POST['logourl'] ): '');
-    $badgeurl = ((isset($_POST['badgeurl'])) ? esc_url_raw ($_POST['badgeurl'] ): '');
+    $logoImage = ((isset($_FILES['logoImage'])) ? $_FILES['logoImage']: '');
+    $badgeImage = ((isset($_FILES['badgeImage'])) ? $_FILES['badgeImage']: '');
     $disclaimer = ((isset($_POST['disclaimer'])) ? stripslashes($_POST['disclaimer']): '');
+
+    $logoUrl = $wpdb->get_var("SELECT logo_url FROM {$wpdb->prefix}dealmaker WHERE ID = $manage_maker");
+    $badgeUrl = $wpdb->get_var("SELECT badge_url FROM {$wpdb->prefix}dealmaker WHERE ID = $manage_maker");
     
+    if(!empty($logoImage['tmp_name'])){
+        $logoUrl = upload_dealmaker_images($logoImage, "logo-$manage_maker");
+    }
+    if(!empty($badgeImage['tmp_name'])){
+        $badgeUrl = upload_dealmaker_images($badgeImage, "badge-$manage_maker"); 
+    }
+    
+
     $wpdb->update($wpdb->prefix.'dealmaker', array(
         'title' => $title,
         'subtitle' => $subtitle,
-        'logo_url' => $logourl,
-        'badge_url' => $badgeurl,
+        'logo_url' => $logoUrl,
+        'badge_url' => $badgeUrl,
         'description' => $description,
         'disclaimer' => $disclaimer
     ), array("ID" => $manage_maker), array("%s","%s","%s","%s","%s","%s"), array("%d"));
 }
 
+global $dealerror;
 $title = '';
 $subtitle = '';
 $description = '';
-$logourl = '';
-$badgeurl = '';
+$logoImage = '';
+$badgeImage = '';
 $disclaimer = '';
 
 if(isset($manage_maker)){
@@ -60,14 +113,15 @@ if(isset($manage_maker)){
         $title = $result->title;
         $subtitle = $result->subtitle;
         $description = $result->description;
-        $logourl = $result->logo_url;
-        $badgeurl = $result->badge_url;
+        $logoImage = $result->logo_url;
+        $badgeImage = $result->badge_url;
         $disclaimer = $result->disclaimer;
     }
 }
 ?>
 
-<form id="dealmaker" method="post">
+<?php echo $dealerror; ?>
+<form id="dealmaker" method="post" enctype="multipart/form-data">
     <div class="_info_box">
         <label for="title_text">Title</label>
         <input type="text" id="title_text" name="maker_title" class="widefat" value="<?php echo $title ?>">
@@ -87,12 +141,18 @@ if(isset($manage_maker)){
         ?>
     </div>
     <div class="_info_box">
-        <label for="logourl">Logo URL</label>
-        <input type="url" name="logourl" id="logourl" class="widefat" value="<?php echo $logourl ?>">
+        <label for="logoImage">Logo Image</label>
+        <div class="previewImage">
+            <img src="<?php echo $logoImage ?>" width="200px">
+        </div>
+        <input type="file" name="logoImage" id="logoImage">
     </div>
     <div class="_info_box">
-        <label for="badgeurl">Badge URL</label>
-        <input type="url" name="badgeurl" id="badgeurl" class="widefat" value="<?php echo $badgeurl ?>">
+        <label for="badgeImage">Badge Image</label>
+        <div class="previewImage">
+            <img src="<?php echo $badgeImage ?>" width="200px">
+        </div>
+        <input type="file" name="badgeImage" id="badgeImage">
     </div>
     <div class="_info_box">
         <label for="disclaimer">Disclaimer</label>
